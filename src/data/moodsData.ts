@@ -1,0 +1,55 @@
+import { MoodConfig } from "../types";
+
+export const MOODS: MoodConfig[] = [
+  {
+    id: 1,
+    label: "Rough",
+    subtext: "Heavy, struggling, or exhausted",
+    size: 46,
+    color: "#C87362",
+    activeBorder: "#E8A395",
+    bgGlow: "rgba(200, 115, 98, 0.2)",
+    shapeClass: "rounded-[40%_60%_70%_30%/40%_50%_60%_50%]",
+  },
+  {
+    id: 2,
+    label: "Low",
+    subtext: "Subdued, weary, or down",
+    size: 54,
+    color: "#8392A0",
+    activeBorder: "#B5C2CD",
+    bgGlow: "rgba(131, 146, 160, 0.2)",
+    shapeClass: "rounded-[55%_45%_38%_62%/45%_55%_45%_55%]",
+  },
+  {
+    id: 3,
+    label: "Okay",
+    subtext: "Steady, present, neutral",
+    size: 62,
+    color: "#B4A999",
+    activeBorder: "#DDD6CB",
+    bgGlow: "rgba(180, 169, 153, 0.2)",
+    shapeClass: "rounded-[48%_52%_56%_44%/52%_48%_52%_48%]",
+  },
+  {
+    id: 4,
+    label: "Good",
+    subtext: "Gentle ease, warmth, content",
+    size: 70,
+    color: "#8E9F85",
+    activeBorder: "#C0CEB9",
+    bgGlow: "rgba(142, 159, 133, 0.25)",
+    shapeClass: "rounded-[60%_40%_48%_52%/42%_58%_46%_54%]",
+  },
+  {
+    id: 5,
+    label: "Great",
+    subtext: "Vibrant, fulfilled, light",
+    size: 78,
+    color: "#D29F54",
+    activeBorder: "#F3D39E",
+    bgGlow: "rgba(210, 159, 84, 0.25)",
+    shapeClass: "rounded-[50%_50%_42%_58%/55%_45%_55%_45%]",
+  },
+];
+

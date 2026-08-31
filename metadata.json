@@ -1,0 +1,6 @@
+{
+  "name": "Check-In",
+  "description": "Mobile-first mental wellness micro-support app for daily mood check-ins, guided micro-sessions, private vent journaling with reflections, mood trends, and crisis safety support.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

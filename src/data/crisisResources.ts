@@ -1,0 +1,63 @@
+import { CrisisResource } from "../types";
+
+export const CRISIS_RESOURCES: CrisisResource[] = [
+  {
+    name: "988 Suicide & Crisis Lifeline",
+    phone: "988",
+    text: "Text 988",
+    coverage: "United States & Canada (Free, 24/7, Confidential)",
+    description: "Immediate support for anyone experiencing mental health-related distress, suicidal thoughts, or emotional pain.",
+    badge: "Immediate Toll-Free",
+    url: "https://988lifeline.org",
+  },
+  {
+    name: "Crisis Text Line",
+    text: "Text HOME to 741741",
+    coverage: "US & Canada (741741) · UK (85258) · Ireland (50808)",
+    description: "Free, 24/7 crisis support via SMS. Connect with a trained crisis counselor within minutes.",
+    badge: "Text Support",
+    url: "https://www.crisistextline.org",
+  },
+  {
+    name: "The Trevor Project",
+    phone: "1-866-488-7386",
+    text: "Text START to 678-678",
+    coverage: "LGBTQ+ Youth (US & International resources)",
+    description: "24/7 confidential suicide prevention and crisis intervention services for LGBTQ young people.",
+    badge: "LGBTQ+ Focused",
+    url: "https://www.thetrevorproject.org",
+  },
+  {
+    name: "Veterans Crisis Line",
+    phone: "988 (Press 1)",
+    text: "Text 838255",
+    coverage: "US Military Veterans & Service Members",
+    description: "Caring, qualified responders with the Department of Veterans Affairs available around the clock.",
+    badge: "Veterans Support",
+    url: "https://www.veteranscrisisline.net",
+  },
+  {
+    name: "Samaritans UK & Ireland",
+    phone: "116 123",
+    coverage: "United Kingdom & Ireland",
+    description: "Whatever you're going through, a Samaritan will face it with you. 24 hours a day, 365 days a year.",
+    badge: "UK & Ireland",
+    url: "https://www.samaritans.org",
+  },
+  {
+    name: "Lifeline Australia",
+    phone: "13 11 14",
+    text: "Text 0477 13 11 14",
+    coverage: "Australia",
+    description: "24-hour crisis support and suicide prevention services across Australia.",
+    badge: "Australia",
+    url: "https://www.lifeline.org.au",
+  },
+  {
+    name: "Befrienders Worldwide & IASP",
+    coverage: "Global / International Directory",
+    description: "Find emotional support lines and suicide prevention hotlines in over 70 countries worldwide.",
+    badge: "Worldwide Directory",
+    url: "https://findahelpline.com",
+  },
+];
