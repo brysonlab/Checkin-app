@@ -66,7 +66,7 @@ The crisis-check step in `server.ts` runs on every journal and check-in note **b
 
 ## License
 
-[Choose a license — MIT is a common default for this kind of project. See `LICENSE`.]
+This project is licensed under the [MIT License](LICENSE)
 
 ## Disclaimer
 
