@@ -205,7 +205,7 @@ export default function App() {
           activeTab={activeTab}
           onOpenCrisis={() => openCrisisModal(false)}
           onOpenPaywall={() => setIsPaywallOpen(true)}
-          onSelectTab={setActiveTab}
+          onSelectTab={handleTabChange}
         />
 
         {/* Persistent 1-tap Disclaimer Sub-Bar */}

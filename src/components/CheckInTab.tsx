@@ -112,10 +112,12 @@ export const CheckInTab: React.FC<CheckInTabProps> = ({
       </div>
 
       {/* 5-State Organic Mood Picker */}
-      <div className="bg-[#FFFFFF] border border-[#DDD6CC] rounded-3xl p-5 shadow-xs">
-        <div className="flex items-end justify-between px-2 pt-2 pb-4 gap-2">
+      <div className="bg-[#FFFFFF] border border-[#DDD6CC] rounded-3xl p-4 sm:p-5 shadow-xs">
+        <div className="grid grid-cols-5 gap-1.5 sm:gap-2.5 pt-1 pb-2">
           {MOODS.map((m) => {
             const isSelected = selectedMood === m.id;
+            // Proportion relative to max size (78), mapped to a responsive percentage of the square slot
+            const sizePercent = Math.round((m.size / 78) * 82);
             return (
               <button
                 key={m.id}
@@ -124,34 +126,44 @@ export const CheckInTab: React.FC<CheckInTabProps> = ({
                   setSelectedMood(m.id);
                   if (isSaved && !isEditing) setIsEditing(true);
                 }}
-                className="group flex flex-col items-center focus:outline-none transition-all duration-300 relative"
+                className="group flex flex-col items-center justify-between w-full focus:outline-none transition-all duration-300 relative py-1"
                 aria-label={m.label}
               >
-                {/* Organic fluid shape */}
-                <div
-                  style={{
-                    width: m.size,
-                    height: m.size,
-                    backgroundColor: m.color,
-                    boxShadow: isSelected ? `0 0 16px ${m.bgGlow}, 0 2px 8px rgba(0,0,0,0.15)` : "none",
-                  }}
-                  className={`transition-all duration-300 flex items-center justify-center cursor-pointer ${m.shapeClass} ${
-                    isSelected
-                      ? "scale-110 ring-4 ring-[#1A1C19] ring-offset-2 ring-offset-white opacity-100"
-                      : selectedMood === null
-                      ? "opacity-90 hover:opacity-100 hover:scale-105"
-                      : "opacity-50 hover:opacity-85"
-                  }`}
-                >
-                  {isSelected && (
-                    <Check className="w-5 h-5 text-[#FFFFFF] stroke-[3] animate-fade-in drop-shadow" />
-                  )}
+                {/* Responsive Square Container for the Circle */}
+                <div className="w-full aspect-square flex items-center justify-center relative p-0.5">
+                  {/* Organic fluid shape */}
+                  <div
+                    style={{
+                      width: `${sizePercent}%`,
+                      height: `${sizePercent}%`,
+                      aspectRatio: "1 / 1",
+                      maxWidth: "100%",
+                      maxHeight: "100%",
+                      backgroundColor: m.color,
+                      boxShadow: isSelected
+                        ? `0 0 16px ${m.bgGlow}, 0 2px 8px rgba(0,0,0,0.15)`
+                        : "none",
+                    }}
+                    className={`aspect-square transition-all duration-300 flex items-center justify-center cursor-pointer ${m.shapeClass} ${
+                      isSelected
+                        ? "scale-105 ring-3 sm:ring-4 ring-[#1A1C19] ring-offset-2 ring-offset-white opacity-100"
+                        : selectedMood === null
+                        ? "opacity-90 hover:opacity-100 hover:scale-105"
+                        : "opacity-50 hover:opacity-85"
+                    }`}
+                  >
+                    {isSelected && (
+                      <Check className="w-4 h-4 sm:w-5 sm:h-5 text-[#FFFFFF] stroke-[3] animate-fade-in drop-shadow" />
+                    )}
+                  </div>
                 </div>
 
                 {/* Mood label */}
                 <span
-                  className={`text-xs mt-2.5 transition-colors ${
-                    isSelected ? "text-[#1A1C19] font-bold" : "text-[#484E48] font-semibold group-hover:text-[#1A1C19]"
+                  className={`text-[11px] sm:text-xs mt-1.5 transition-colors block text-center truncate w-full ${
+                    isSelected
+                      ? "text-[#1A1C19] font-bold"
+                      : "text-[#484E48] font-semibold group-hover:text-[#1A1C19]"
                   }`}
                 >
                   {m.label}

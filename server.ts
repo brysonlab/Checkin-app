@@ -393,6 +393,14 @@ app.get("/api/safety/stats", (_req: Request, res: Response) => {
   });
 });
 
+// Catch-all for API routes so they return JSON 404 and NEVER fall through to the React SPA
+app.all("/api/*", (_req: Request, res: Response) => {
+  res.status(404).json({ error: "API route not found" });
+});
+app.all("/api", (_req: Request, res: Response) => {
+  res.status(404).json({ error: "API route not found" });
+});
+
 // ----------------------------------------------------
 // VITE MIDDLEWARE & SERVER STARTUP
 // ----------------------------------------------------
@@ -407,7 +415,10 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
-    app.get("*", (_req: Request, res: Response) => {
+    app.get("*", (req: Request, res: Response) => {
+      if (req.path.startsWith("/api")) {
+        return res.status(404).json({ error: "API route not found" });
+      }
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
