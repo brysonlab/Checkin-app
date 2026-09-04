@@ -182,37 +182,55 @@ app.post("/api/vent/reflect", async (req: Request, res: Response) => {
     const isFreeTier = !user.isPlus;
     const isAtLimit = isFreeTier && userEntriesThisMonth.length >= 5;
 
-    // Step 3: Generate warm, validating, non-advice reflection
-    let reflection = "";
-    const ai = getGeminiClient();
+   // Step 3: Generate warm, validating, non-advice reflection
+let reflection = "";
 
-    if (ai) {
-      try {
-        const response = await ai.models.generateContent({
-          model: "gemini-3.7-flash",
-          contents: `A person wrote this private journal entry to process their emotional state:
+try {
+  const supabaseUrl = process.env.SUPABASE_URL;
+  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
+
+  if (!supabaseUrl || !supabaseAnonKey) {
+    throw new Error("Supabase environment variables are not configured");
+  }
+
+  const response = await fetch(
+    `${supabaseUrl}/functions/v1/smart-action`,
+    {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+        "apikey": supabaseAnonKey,
+        "Authorization": `Bearer ${supabaseAnonKey}`,
+      },
+      body: JSON.stringify({
+        message: `A person wrote this private journal entry to process their emotional state:
+
 "${text}"
 
 Write a short, compassionate, 2 to 3 sentence reflection that validates what they are feeling.
+
 CRITICAL GUIDELINES:
 1. Do NOT give advice or solutions.
 2. Do NOT diagnose or analyze psychological conditions.
 3. Do NOT mention you are an AI, language model, or virtual assistant.
 4. Keep the tone warm, grounded, plain language, and respectful.
 5. Simply acknowledge and validate the human weight of their words.`,
-        });
-
-        reflection = response.text?.trim() || "";
-      } catch (geminiError) {
-        console.error("Gemini reflection error:", geminiError);
-        reflection = "Thank you for putting this into words. Honoring how you feel is an important step.";
-      }
+      }),
     }
+  );
 
-    if (!reflection) {
-      reflection = "Thank you for sharing this space with your thoughts. It takes strength to name what you're carrying.";
-    }
+  const data = await response.json();
 
+  if (!response.ok) {
+    throw new Error(`Supabase AI error: ${JSON.stringify(data)}`);
+  }
+
+  reflection = data?.response?.trim() || "";
+} catch (error) {
+  console.error("Supabase AI reflection error:", error);
+  reflection =
+    "Thank you for putting this into words. Honoring how you feel is an important step.";
+}
     // Save journal entry
     const savedEntry: VentJournalItem = {
       id: entryId || `vent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
