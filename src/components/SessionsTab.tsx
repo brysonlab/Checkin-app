@@ -59,10 +59,10 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({
         <>
           {/* Header */}
           <div>
-            <h2 className="font-serif italic text-2xl sm:text-3xl font-medium text-[#2D302E]">
+            <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#1A1C19]">
               Guided Micro-Sessions
             </h2>
-            <p className="text-xs sm:text-sm text-[#7C827B] mt-1">
+            <p className="text-xs sm:text-sm text-[#414741] mt-1 font-medium">
               3 to 5-minute structured somatic and breathing practices for in-the-moment relief.
             </p>
           </div>
@@ -75,10 +75,10 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({
                 <button
                   key={tag}
                   onClick={() => setSelectedTag(tag)}
-                  className={`text-xs px-3 py-1.5 rounded-full border whitespace-nowrap transition-all ${
+                  className={`text-xs px-3.5 py-1.5 rounded-full border whitespace-nowrap transition-all ${
                     active
-                      ? "bg-[#8E9F85] border-[#8E9F85] text-white font-semibold shadow-xs"
-                      : "bg-[#FFFFFF] border-[#E8E4DF] text-[#7C827B] hover:text-[#2D302E] hover:border-[#D9D4CC]"
+                      ? "bg-[#2A5A3B] border-[#2A5A3B] text-white font-bold shadow-xs"
+                      : "bg-[#FFFFFF] border-[#DDD6CC] text-[#414741] font-semibold hover:text-[#1A1C19] hover:border-[#BDB3A4]"
                   }`}
                 >
                   {tag}
@@ -99,40 +99,40 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({
                   onClick={() => handleStartSession(session)}
                   className={`relative p-4 sm:p-5 rounded-3xl border transition-all cursor-pointer group ${
                     isLocked
-                      ? "bg-[#FAF8F5]/80 border-[#E8E4DF] opacity-75 hover:opacity-100"
-                      : "bg-[#FFFFFF] border-[#E8E4DF] hover:border-[#8E9F85]/60 hover:shadow-sm"
+                      ? "bg-[#FAF8F5]/90 border-[#DDD6CC] opacity-80 hover:opacity-100"
+                      : "bg-[#FFFFFF] border-[#DDD6CC] hover:border-[#2A5A3B] hover:shadow-sm"
                   }`}
                 >
                   <div className="flex items-start justify-between gap-3">
-                    <div className="space-y-1 flex-1">
+                    <div className="space-y-1.5 flex-1">
                       <div className="flex items-center gap-2">
-                        <span className={`text-[11px] px-2.5 py-0.5 rounded-full font-semibold border ${session.tagColor || "bg-[#8E9F85]/15 text-[#4D6045] border-[#8E9F85]/30"}`}>
+                        <span className={`text-[11px] px-2.5 py-0.5 rounded-full font-bold border ${session.tagColor || "bg-[#EAF3EB] text-[#1B4B27] border-[#8DC39A]"}`}>
                           {session.tag}
                         </span>
-                        <span className="text-[11px] text-[#7C827B]">
+                        <span className="text-[11px] text-[#5C635C] font-semibold">
                           {session.duration}
                         </span>
                         {isDone && (
-                          <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#F0F4EE] text-[#4D6045] font-semibold border border-[#8E9F85]/30">
-                            <Check className="w-3 h-3" />
+                          <span className="inline-flex items-center gap-1 text-[10px] px-2 py-0.5 rounded-full bg-[#EAF3EB] text-[#1B4B27] font-bold border border-[#8DC39A]">
+                            <Check className="w-3 h-3 stroke-[3]" />
                             <span>Practiced</span>
                           </span>
                         )}
                       </div>
 
-                      <h3 className="font-serif italic text-lg font-medium text-[#2D302E] group-hover:text-[#53684B] transition-colors">
+                      <h3 className="font-serif italic text-lg font-bold text-[#1A1C19] group-hover:text-[#1B4B27] transition-colors">
                         {session.title}
                       </h3>
 
-                      <p className="text-xs text-[#7C827B] line-clamp-2">
+                      <p className="text-xs text-[#414741] font-medium line-clamp-2 leading-relaxed">
                         {session.summary}
                       </p>
                     </div>
 
                     {/* Action Icon */}
-                    <div className="flex items-center justify-center w-9 h-9 rounded-2xl bg-[#F7F3EE] border border-[#E8E4DF] text-[#8E9F85] flex-shrink-0 group-hover:bg-[#8E9F85] group-hover:text-white transition-all shadow-xs">
+                    <div className="flex items-center justify-center w-9 h-9 rounded-2xl bg-[#FAF8F5] border border-[#DDD6CC] text-[#2A5A3B] flex-shrink-0 group-hover:bg-[#2A5A3B] group-hover:text-white group-hover:border-[#2A5A3B] transition-all shadow-xs">
                       {isLocked ? (
-                        <Lock className="w-4 h-4 text-[#7C827B]" />
+                        <Lock className="w-4 h-4 text-[#5C635C]" />
                       ) : (
                         <Play className="w-4 h-4 fill-current ml-0.5" />
                       )}
@@ -145,19 +145,19 @@ export const SessionsTab: React.FC<SessionsTabProps> = ({
 
           {/* Plus upgrade banner if on free tier */}
           {!user.isPlus && (
-            <div className="bg-[#FAF8F5] border border-[#8E9F85]/40 rounded-3xl p-5 text-center space-y-3 shadow-xs">
-              <Sparkles className="w-6 h-6 text-[#8E9F85] mx-auto" />
+            <div className="bg-[#FAF8F5] border-2 border-[#2A5A3B]/30 rounded-3xl p-5 text-center space-y-3 shadow-xs">
+              <Sparkles className="w-6 h-6 text-[#2A5A3B] mx-auto" />
               <div>
-                <h3 className="font-serif italic text-lg font-medium text-[#2D302E]">
+                <h3 className="font-serif italic text-lg font-bold text-[#1A1C19]">
                   Unlock the Complete 8+ Session Library
                 </h3>
-                <p className="text-xs text-[#7C827B] mt-1">
+                <p className="text-xs text-[#414741] font-medium mt-1">
                   Access 4-7-8 relaxation, 3am sleep loops, loneliness soothing, and anger release exercises with Check-In Plus.
                 </p>
               </div>
               <button
                 onClick={onOpenPaywall}
-                className="py-2.5 px-6 rounded-xl bg-[#8E9F85] text-white font-bold text-xs hover:bg-[#7D8F75] transition-all shadow-xs"
+                className="py-2.5 px-6 rounded-xl bg-[#2A5A3B] text-white font-bold text-xs hover:bg-[#20472E] transition-all shadow-xs active:scale-95"
               >
                 Try 7 Days Free
               </button>
@@ -193,29 +193,30 @@ const ActiveSessionViewer: React.FC<ActiveSessionViewerProps> = ({
   const isLastStep = currentStep === session.steps.length - 1;
 
   return (
-    <div className="bg-[#FFFFFF] border border-[#E8E4DF] rounded-3xl p-6 shadow-md space-y-6 animate-fade-in">
+    <div className="bg-[#FFFFFF] border border-[#DDD6CC] rounded-3xl p-6 shadow-md space-y-6 animate-fade-in">
       {/* Header with Close */}
-      <div className="flex items-center justify-between pb-3 border-b border-[#E8E4DF]">
+      <div className="flex items-center justify-between pb-3 border-b border-[#DDD6CC]">
         <div className="flex items-center gap-2">
-          <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#F0F4EE] text-[#4D6045] font-semibold border border-[#8E9F85]/30">
+          <span className="text-xs px-2.5 py-0.5 rounded-full bg-[#EAF3EB] text-[#1B4B27] font-bold border border-[#8DC39A]">
             {session.tag}
           </span>
-          <span className="text-xs text-[#7C827B]">{session.duration}</span>
+          <span className="text-xs text-[#414741] font-semibold">{session.duration}</span>
         </div>
 
         <button
           onClick={onClose}
-          className="p-1.5 rounded-full bg-[#F7F3EE] text-[#7C827B] hover:text-[#2D302E] transition-colors"
+          aria-label="Close active session"
+          className="p-1.5 rounded-full bg-[#FAF8F5] text-[#414741] hover:text-[#1A1C19] border border-[#DDD6CC] transition-colors"
         >
           <X className="w-4 h-4" />
         </button>
       </div>
 
       <div>
-        <h2 className="font-serif italic text-2xl font-medium text-[#2D302E]">
+        <h2 className="font-serif italic text-2xl font-bold text-[#1A1C19]">
           {session.title}
         </h2>
-        <p className="text-xs text-[#7C827B] mt-1">{session.summary}</p>
+        <p className="text-xs text-[#414741] font-medium mt-1">{session.summary}</p>
       </div>
 
       {/* Interactive visual breathing timer if applicable */}
@@ -223,36 +224,36 @@ const ActiveSessionViewer: React.FC<ActiveSessionViewerProps> = ({
       {session.breathingType === "relaxing" && <RelaxingBreathingVisualizer />}
 
       {/* Step by step card */}
-      <div className="bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-5 min-h-[140px] flex flex-col justify-between shadow-xs">
+      <div className="bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-5 min-h-[140px] flex flex-col justify-between shadow-xs">
         <div className="space-y-2">
-          <div className="flex items-center justify-between text-xs text-[#7C827B]">
+          <div className="flex items-center justify-between text-xs text-[#414741] font-semibold">
             <span>Step {currentStep + 1} of {session.steps.length}</span>
-            <div className="flex items-center gap-1">
+            <div className="flex items-center gap-1.5">
               {session.steps.map((_, i) => (
                 <span
                   key={i}
-                  className={`w-2 h-2 rounded-full transition-all ${
-                    i === currentStep ? "w-4 bg-[#8E9F85]" : i < currentStep ? "bg-[#B5C2CD]" : "bg-[#E8E4DF]"
+                  className={`h-2 rounded-full transition-all ${
+                    i === currentStep ? "w-5 bg-[#2A5A3B]" : i < currentStep ? "w-2 bg-[#8DC39A]" : "w-2 bg-[#DDD6CC]"
                   }`}
                 />
               ))}
             </div>
           </div>
 
-          <p className="text-sm sm:text-base text-[#2D302E] leading-relaxed font-serif italic pt-2">
+          <p className="text-sm sm:text-base text-[#1A1C19] leading-relaxed font-serif italic pt-2 font-medium">
             {session.steps[currentStep]}
           </p>
         </div>
 
         {/* Step Navigation Controls */}
-        <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#E8E4DF]">
+        <div className="flex items-center justify-between pt-4 mt-2 border-t border-[#DDD6CC]">
           <button
             onClick={onPrevStep}
             disabled={currentStep === 0}
             className={`flex items-center gap-1 text-xs py-1.5 px-3 rounded-lg border transition-colors ${
               currentStep === 0
-                ? "border-transparent text-[#B0A79E] cursor-default"
-                : "border-[#E8E4DF] text-[#7C827B] hover:text-[#2D302E] hover:bg-[#F0F4EE]"
+                ? "border-transparent text-[#AFA596] cursor-default"
+                : "border-[#DDD6CC] text-[#333933] font-semibold hover:text-[#1A1C19] hover:bg-[#EAF3EB]"
             }`}
           >
             <ChevronLeft className="w-3.5 h-3.5" />
@@ -262,7 +263,7 @@ const ActiveSessionViewer: React.FC<ActiveSessionViewerProps> = ({
           {isLastStep ? (
             <button
               onClick={onComplete}
-              className="flex items-center gap-1.5 text-xs py-2 px-4 rounded-xl bg-[#8E9F85] text-white font-bold hover:bg-[#7D8F75] transition-all shadow-xs active:scale-95"
+              className="flex items-center gap-1.5 text-xs py-2 px-4 rounded-xl bg-[#2A5A3B] text-white font-bold hover:bg-[#20472E] transition-all shadow-xs active:scale-95"
             >
               <Check className="w-4 h-4 stroke-[3]" />
               <span>Complete Practice</span>
@@ -270,7 +271,7 @@ const ActiveSessionViewer: React.FC<ActiveSessionViewerProps> = ({
           ) : (
             <button
               onClick={onNextStep}
-              className="flex items-center gap-1 text-xs py-2 px-4 rounded-xl bg-[#8E9F85] text-white font-bold hover:bg-[#7D8F75] transition-all shadow-xs"
+              className="flex items-center gap-1 text-xs py-2 px-4 rounded-xl bg-[#2A5A3B] text-white font-bold hover:bg-[#20472E] transition-all shadow-xs"
             >
               <span>Next Step</span>
               <ChevronRight className="w-3.5 h-3.5" />
@@ -330,37 +331,37 @@ const BoxBreathingVisualizer: React.FC = () => {
   };
 
   const phaseConfig = {
-    inhale: { label: "Inhale slowly", scale: "scale-100", color: "#8E9F85", instruction: "Through the nose, feeling lungs fill" },
-    hold1: { label: "Hold full", scale: "scale-100", color: "#D29F54", instruction: "Soft and still, shoulders relaxed" },
-    exhale: { label: "Exhale gently", scale: "scale-60", color: "#8392A0", instruction: "Through the mouth, letting go" },
-    hold2: { label: "Hold empty", scale: "scale-60", color: "#B4A999", instruction: "Rest in the quiet pause" },
+    inhale: { label: "Inhale slowly", scale: "scale-100", color: "#2D7245", instruction: "Through the nose, feeling lungs fill" },
+    hold1: { label: "Hold full", scale: "scale-100", color: "#C2780E", instruction: "Soft and still, shoulders relaxed" },
+    exhale: { label: "Exhale gently", scale: "scale-60", color: "#3A6485", instruction: "Through the mouth, letting go" },
+    hold2: { label: "Hold empty", scale: "scale-60", color: "#7D6B53", instruction: "Rest in the quiet pause" },
   };
 
   const current = phaseConfig[phase];
 
   return (
-    <div className="bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-5 flex flex-col items-center justify-center space-y-4 shadow-xs">
+    <div className="bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-5 flex flex-col items-center justify-center space-y-4 shadow-xs">
       {/* Circle Animation Container */}
       <div className="relative w-44 h-44 flex items-center justify-center">
         {/* Outer subtle glow ring */}
         <div
-          className="absolute inset-0 rounded-full border border-dashed border-[#D9D4CC] transition-all duration-1000 animate-spin-slow"
-          style={{ opacity: isRunning ? 0.8 : 0.4 }}
+          className="absolute inset-0 rounded-full border-2 border-dashed border-[#C4BCB0] transition-all duration-1000 animate-spin-slow"
+          style={{ opacity: isRunning ? 0.9 : 0.5 }}
         />
 
         {/* Breathing Circle */}
         <div
           className="w-36 h-36 rounded-full flex flex-col items-center justify-center text-center p-2 transition-all duration-1000 ease-in-out shadow-md"
           style={{
-            backgroundColor: `${current.color}15`,
-            border: `3px solid ${current.color}`,
+            backgroundColor: `${current.color}20`,
+            border: `3.5px solid ${current.color}`,
             transform: isRunning && (phase === "inhale" || phase === "hold1") ? "scale(1.15)" : "scale(0.85)",
           }}
         >
-          <span className="text-3xl font-bold font-serif italic text-[#2D302E]">
+          <span className="text-3xl font-bold font-serif italic text-[#1A1C19]">
             {isRunning ? secondsLeft : "4"}
           </span>
-          <span className="text-xs font-semibold mt-0.5" style={{ color: current.color }}>
+          <span className="text-xs font-bold mt-0.5" style={{ color: current.color }}>
             {isRunning ? current.label : "Box Breath"}
           </span>
         </div>
@@ -368,10 +369,10 @@ const BoxBreathingVisualizer: React.FC = () => {
 
       {/* Instruction subtitle */}
       <div className="text-center space-y-0.5">
-        <div className="text-xs font-medium text-[#2D302E]">
+        <div className="text-xs font-bold text-[#1A1C19]">
           {isRunning ? current.instruction : "4s Inhale · 4s Hold · 4s Exhale · 4s Hold"}
         </div>
-        <div className="text-[11px] text-[#7C827B]">
+        <div className="text-[11px] text-[#484E48] font-semibold">
           Round {roundCount} · Aim for 4 to 6 cycles
         </div>
       </div>
@@ -380,7 +381,7 @@ const BoxBreathingVisualizer: React.FC = () => {
       <div className="flex items-center gap-3 pt-1">
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="flex items-center gap-2 py-2 px-5 rounded-full bg-[#8E9F85] text-white font-bold text-xs hover:bg-[#7D8F75] transition-all shadow-xs active:scale-95"
+          className="flex items-center gap-2 py-2 px-5 rounded-full bg-[#2A5A3B] text-white font-bold text-xs hover:bg-[#20472E] transition-all shadow-xs active:scale-95"
         >
           {isRunning ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
           <span>{isRunning ? "Pause" : "Start Box Rhythm"}</span>
@@ -388,7 +389,8 @@ const BoxBreathingVisualizer: React.FC = () => {
 
         <button
           onClick={resetTimer}
-          className="p-2 rounded-full bg-[#F0EDE6] text-[#7C827B] hover:text-[#2D302E] transition-colors"
+          aria-label="Reset box rhythm timer"
+          className="p-2 rounded-full bg-[#EAE4D9] text-[#333933] hover:text-[#1A1C19] border border-[#DDD6CC] transition-colors"
           title="Reset timer"
         >
           <RotateCcw className="w-3.5 h-3.5" />
@@ -451,36 +453,36 @@ const RelaxingBreathingVisualizer: React.FC = () => {
   };
 
   const labels = {
-    inhale: { text: "Inhale (4s)", color: "#8E9F85" },
-    hold: { text: "Hold gently (7s)", color: "#D29F54" },
-    exhale: { text: "Whoosh exhale (8s)", color: "#8392A0" },
+    inhale: { text: "Inhale (4s)", color: "#2D7245" },
+    hold: { text: "Hold gently (7s)", color: "#C2780E" },
+    exhale: { text: "Whoosh exhale (8s)", color: "#3A6485" },
   };
 
   return (
-    <div className="bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-5 flex flex-col items-center justify-center space-y-4 shadow-xs">
+    <div className="bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-5 flex flex-col items-center justify-center space-y-4 shadow-xs">
       <div className="relative w-40 h-40 flex items-center justify-center">
         <div
           className="w-32 h-32 rounded-full flex flex-col items-center justify-center text-center p-2 transition-all duration-1000 ease-in-out shadow-md"
           style={{
-            backgroundColor: `${labels[phase].color}15`,
-            border: `3px solid ${labels[phase].color}`,
+            backgroundColor: `${labels[phase].color}20`,
+            border: `3.5px solid ${labels[phase].color}`,
             transform: isRunning && phase === "inhale" ? "scale(1.2)" : phase === "hold" ? "scale(1.2)" : "scale(0.8)",
           }}
         >
-          <span className="text-3xl font-bold font-serif italic text-[#2D302E]">
+          <span className="text-3xl font-bold font-serif italic text-[#1A1C19]">
             {isRunning ? secondsLeft : "4"}
           </span>
-          <span className="text-xs font-semibold mt-0.5" style={{ color: labels[phase].color }}>
+          <span className="text-xs font-bold mt-0.5" style={{ color: labels[phase].color }}>
             {isRunning ? labels[phase].text : "4-7-8 Breath"}
           </span>
         </div>
       </div>
 
       <div className="text-center space-y-0.5">
-        <div className="text-xs font-medium text-[#2D302E]">
+        <div className="text-xs font-bold text-[#1A1C19]">
           4s Inhale · 7s Hold · 8s Complete Exhale
         </div>
-        <div className="text-[11px] text-[#7C827B]">
+        <div className="text-[11px] text-[#484E48] font-semibold">
           Cycle {cycle} of 4 · Parasympathetic nervous system reset
         </div>
       </div>
@@ -488,7 +490,7 @@ const RelaxingBreathingVisualizer: React.FC = () => {
       <div className="flex items-center gap-3 pt-1">
         <button
           onClick={() => setIsRunning(!isRunning)}
-          className="flex items-center gap-2 py-2 px-5 rounded-full bg-[#8E9F85] text-white font-bold text-xs hover:bg-[#7D8F75] transition-all shadow-xs active:scale-95"
+          className="flex items-center gap-2 py-2 px-5 rounded-full bg-[#2A5A3B] text-white font-bold text-xs hover:bg-[#20472E] transition-all shadow-xs active:scale-95"
         >
           {isRunning ? <Pause className="w-3.5 h-3.5 fill-current" /> : <Play className="w-3.5 h-3.5 fill-current ml-0.5" />}
           <span>{isRunning ? "Pause" : "Start 4-7-8"}</span>
@@ -496,7 +498,8 @@ const RelaxingBreathingVisualizer: React.FC = () => {
 
         <button
           onClick={resetTimer}
-          className="p-2 rounded-full bg-[#F0EDE6] text-[#7C827B] hover:text-[#2D302E] transition-colors"
+          aria-label="Reset 4-7-8 timer"
+          className="p-2 rounded-full bg-[#EAE4D9] text-[#333933] hover:text-[#1A1C19] border border-[#DDD6CC] transition-colors"
           title="Reset timer"
         >
           <RotateCcw className="w-3.5 h-3.5" />

@@ -1,0 +1,17 @@
+{
+  "name": "Check-In — A Space to Be Heard",
+  "short_name": "Check-In",
+  "description": "A private space to express how you're feeling, reflect without judgment, and find supportive guidance when you need it.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FAF8F5",
+  "theme_color": "#2A5A3B",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

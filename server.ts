@@ -1,8 +1,11 @@
 import express, { Request, Response } from "express";
 import path from "path";
 import { createServer as createViteServer } from "vite";
-import { GoogleGenAI } from "@google/genai";
 import dotenv from "dotenv";
+import {
+  generateJournalReflection,
+  getGeminiModelName,
+} from "./src/server/geminiService.ts";
 
 dotenv.config();
 
@@ -10,6 +13,7 @@ const app = express();
 const PORT = 3000;
 
 app.use(express.json());
+app.use(express.static(path.join(process.cwd(), "public")));
 
 // In-memory persistent data store with mock user ID support
 interface CheckInItem {
@@ -107,31 +111,18 @@ function scanForCrisis(text: string): { isCrisis: boolean; matchedKeyword?: stri
   return { isCrisis: false };
 }
 
-// Lazy-initialized Gemini instance
-let aiClient: GoogleGenAI | null = null;
-function getGeminiClient(): GoogleGenAI | null {
-  const apiKey = process.env.GEMINI_API_KEY;
-  if (!apiKey) return null;
-  if (!aiClient) {
-    aiClient = new GoogleGenAI({
-      apiKey,
-      httpOptions: {
-        headers: {
-          "User-Agent": "aistudio-build",
-        },
-      },
-    });
-  }
-  return aiClient;
-}
-
 // ----------------------------------------------------
 // API ROUTES
 // ----------------------------------------------------
 
 // 1. Health check
 app.get("/api/health", (_req: Request, res: Response) => {
-  res.json({ status: "ok", timestamp: new Date().toISOString() });
+  res.json({
+    status: "ok",
+    geminiConfigured: !!process.env.GEMINI_API_KEY,
+    model: getGeminiModelName(),
+    timestamp: new Date().toISOString(),
+  });
 });
 
 // 2. Safety text check
@@ -156,7 +147,7 @@ app.post("/api/vent/reflect", async (req: Request, res: Response) => {
       return res.status(400).json({ error: "Text is required." });
     }
 
-    // Step 1: Safety & Crisis Check ALWAYS FIRST
+    // Step 1: Safety & Crisis Check ALWAYS FIRST (Pre-empts AI entirely)
     const safetyCheck = scanForCrisis(text);
     if (safetyCheck.isCrisis) {
       safetyTriggerCount++;
@@ -182,55 +173,10 @@ app.post("/api/vent/reflect", async (req: Request, res: Response) => {
     const isFreeTier = !user.isPlus;
     const isAtLimit = isFreeTier && userEntriesThisMonth.length >= 5;
 
-   // Step 3: Generate warm, validating, non-advice reflection
-let reflection = "";
+    // Step 3: Generate warm, validating, non-advice reflection via Google Cloud Gemini
+    const reflectionResult = await generateJournalReflection(text);
+    const reflection = reflectionResult.reflection;
 
-try {
-  const supabaseUrl = process.env.SUPABASE_URL;
-  const supabaseAnonKey = process.env.SUPABASE_ANON_KEY;
-
-  if (!supabaseUrl || !supabaseAnonKey) {
-    throw new Error("Supabase environment variables are not configured");
-  }
-
-  const response = await fetch(
-    `${supabaseUrl}/functions/v1/smart-action`,
-    {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        "apikey": supabaseAnonKey,
-        "Authorization": `Bearer ${supabaseAnonKey}`,
-      },
-      body: JSON.stringify({
-        message: `A person wrote this private journal entry to process their emotional state:
-
-"${text}"
-
-Write a short, compassionate, 2 to 3 sentence reflection that validates what they are feeling.
-
-CRITICAL GUIDELINES:
-1. Do NOT give advice or solutions.
-2. Do NOT diagnose or analyze psychological conditions.
-3. Do NOT mention you are an AI, language model, or virtual assistant.
-4. Keep the tone warm, grounded, plain language, and respectful.
-5. Simply acknowledge and validate the human weight of their words.`,
-      }),
-    }
-  );
-
-  const data = await response.json();
-
-  if (!response.ok) {
-    throw new Error(`Supabase AI error: ${JSON.stringify(data)}`);
-  }
-
-  reflection = data?.response?.trim() || "";
-} catch (error) {
-  console.error("Supabase AI reflection error:", error);
-  reflection =
-    "Thank you for putting this into words. Honoring how you feel is an important step.";
-}
     // Save journal entry
     const savedEntry: VentJournalItem = {
       id: entryId || `vent_${Date.now()}_${Math.random().toString(36).substring(2, 7)}`,
@@ -246,12 +192,15 @@ CRITICAL GUIDELINES:
     res.json({
       isCrisis: false,
       entry: savedEntry,
+      reflection,
+      source: reflectionResult.source,
+      modelUsed: reflectionResult.modelUsed,
       monthlyEntriesCount: userEntriesThisMonth.length + 1,
       isAtLimit,
       isPlus: user.isPlus,
     });
-  } catch (error) {
-    console.error("Error processing vent entry:", error);
+  } catch (error: any) {
+    console.error("[Vent Endpoint Error]", error?.message || error);
     res.status(500).json({ error: "Failed to generate reflection." });
   }
 });
@@ -468,4 +417,10 @@ async function startServer() {
   });
 }
 
-startServer();
+if (!process.env.VERCEL) {
+  startServer();
+}
+
+export default app;
+export { app };
+

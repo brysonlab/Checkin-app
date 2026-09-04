@@ -1,0 +1,6 @@
+# Check-In Robots Configuration
+User-agent: *
+Allow: /
+Disallow: /api/
+
+Sitemap: https://checkin-app.vercel.app/sitemap.xml

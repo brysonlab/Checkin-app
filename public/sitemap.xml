@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">
+  <!-- Primary Home & Daily Wellness Check-In -->
+  <url>
+    <loc>https://checkin-app.vercel.app/</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+
+  <!-- Guided Micro-Sessions (Box Breathing, 4-7-8 Breathing, 5-4-3-2-1 Grounding) -->
+  <url>
+    <loc>https://checkin-app.vercel.app/sessions</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>weekly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Immediate Crisis Support, Helplines & Safety Resources -->
+  <url>
+    <loc>https://checkin-app.vercel.app/crisis</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+
+  <!-- Confidential Vent Journal & Empathetic Reflection -->
+  <url>
+    <loc>https://checkin-app.vercel.app/vent</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Mood Trends & Emotional Analytics -->
+  <url>
+    <loc>https://checkin-app.vercel.app/trends</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>0.8</priority>
+  </url>
+
+  <!-- Privacy, Security & Data Ownership -->
+  <url>
+    <loc>https://checkin-app.vercel.app/privacy</loc>
+    <lastmod>2026-09-04</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+</urlset>

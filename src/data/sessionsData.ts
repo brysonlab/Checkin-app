@@ -6,7 +6,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "Slow the Spiral",
     duration: "3 min",
     tag: "Anxious",
-    tagColor: "bg-[#8392A0]/15 text-[#4D6072] border-[#8392A0]/30",
+    tagColor: "bg-[#EAF1F8] text-[#194569] border-[#92B8DB]",
     summary: "A brief somatic check to interrupt spiraling anxious thoughts and ground back in your body.",
     isFree: true,
     steps: [
@@ -22,7 +22,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "Box Breathing",
     duration: "4 min",
     tag: "Overwhelmed",
-    tagColor: "bg-[#8E9F85]/15 text-[#53684B] border-[#8E9F85]/30",
+    tagColor: "bg-[#EAF3EB] text-[#1B4B27] border-[#8DC39A]",
     summary: "The 4-4-4-4 rhythm used to regulate the nervous system when everything feels too loud.",
     isFree: true,
     breathingType: "box",
@@ -38,7 +38,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "Unclench: Somatic Release",
     duration: "3 min",
     tag: "Tense",
-    tagColor: "bg-[#D29F54]/15 text-[#8A6328] border-[#D29F54]/30",
+    tagColor: "bg-[#FEF5E5] text-[#7C4302] border-[#E5B56E]",
     summary: "Systematically release the subconscious physical tension stored in your jaw, shoulders, and hands.",
     isFree: true,
     steps: [
@@ -54,7 +54,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "The 3 AM Thought Loop",
     duration: "4 min",
     tag: "Can't sleep",
-    tagColor: "bg-[#6D7791]/15 text-[#47526D] border-[#6D7791]/30",
+    tagColor: "bg-[#EEF1F8] text-[#1E3063] border-[#99AEE0]",
     summary: "When sleep won't come and your mind is replaying conversations or tomorrow's to-do list.",
     isFree: false,
     steps: [
@@ -70,7 +70,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "Naming the Anger",
     duration: "3 min",
     tag: "Angry",
-    tagColor: "bg-[#D97B66]/15 text-[#A64E3A] border-[#D97B66]/30",
+    tagColor: "bg-[#FDF1EE] text-[#99220C] border-[#E89283]",
     summary: "Transform reactive frustration into clear self-understanding without judgment.",
     isFree: false,
     steps: [
@@ -86,7 +86,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "Quieting the Loneliness",
     duration: "4 min",
     tag: "Lonely",
-    tagColor: "bg-[#8392A0]/15 text-[#4D6072] border-[#8392A0]/30",
+    tagColor: "bg-[#EAF1F8] text-[#194569] border-[#92B8DB]",
     summary: "A compassionate check-in when you feel disconnected or isolated from the world around you.",
     isFree: false,
     steps: [
@@ -102,7 +102,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "4-7-8 Deep Relaxation",
     duration: "5 min",
     tag: "Relaxing",
-    tagColor: "bg-[#8E9F85]/15 text-[#53684B] border-[#8E9F85]/30",
+    tagColor: "bg-[#EAF3EB] text-[#1B4B27] border-[#8DC39A]",
     summary: "Dr. Weil's renowned parasympathetic activator: Inhale 4s, Hold 7s, Exhale 8s.",
     isFree: false,
     breathingType: "relaxing",
@@ -119,7 +119,7 @@ export const GUIDED_SESSIONS: GuidedSession[] = [
     title: "5-4-3-2-1 Sensory Reset",
     duration: "3 min",
     tag: "Grounding",
-    tagColor: "bg-[#B4A999]/20 text-[#6B6152] border-[#B4A999]/40",
+    tagColor: "bg-[#F3EFE9] text-[#554532] border-[#C2B29F]",
     summary: "Engage your five senses to pull your awareness out of overwhelming mental chatter.",
     isFree: false,
     steps: [

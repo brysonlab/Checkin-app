@@ -14,19 +14,56 @@ import { TabType, UserProfile, CheckInItem, VentJournalItem } from "./types";
 import { StorageService, defaultUser } from "./utils/storage";
 import { ShieldCheck, Sparkles, Heart } from "lucide-react";
 
+// Helper to map pathname to application tab or modal
+function resolveRouteFromPath(): { tab: TabType; isCrisis?: boolean } {
+  if (typeof window === "undefined") return { tab: "checkin" };
+  const clean = window.location.pathname.replace(/^\/+|\/+$/g, "").toLowerCase();
+  if (clean === "sessions" || clean === "micro-sessions") return { tab: "sessions" };
+  if (clean === "vent" || clean === "journal") return { tab: "vent" };
+  if (clean === "trends" || clean === "history") return { tab: "trends" };
+  if (clean === "settings" || clean === "privacy") return { tab: "settings" };
+  if (clean === "crisis" || clean === "support" || clean === "resources") {
+    return { tab: "checkin", isCrisis: true };
+  }
+  return { tab: "checkin" };
+}
+
 export default function App() {
-  const [activeTab, setActiveTab] = useState<TabType>("checkin");
+  const initialRoute = resolveRouteFromPath();
+  const [activeTab, setActiveTab] = useState<TabType>(initialRoute.tab);
   const [user, setUser] = useState<UserProfile>(defaultUser);
   const [checkIns, setCheckIns] = useState<CheckInItem[]>([]);
   const [journalEntries, setJournalEntries] = useState<VentJournalItem[]>([]);
   const [isLoading, setIsLoading] = useState<boolean>(true);
 
   // Modals
-  const [isCrisisModalOpen, setIsCrisisModalOpen] = useState<boolean>(false);
+  const [isCrisisModalOpen, setIsCrisisModalOpen] = useState<boolean>(Boolean(initialRoute.isCrisis));
   const [isCrisisSafetyTriggered, setIsCrisisSafetyTriggered] = useState<boolean>(false);
   const [isOnboardingOpen, setIsOnboardingOpen] = useState<boolean>(false);
   const [isPaywallOpen, setIsPaywallOpen] = useState<boolean>(false);
   const [isTherapistExportOpen, setIsTherapistExportOpen] = useState<boolean>(false);
+
+  // Keep URL pathname and active tab synchronized for SEO and direct linking
+  const handleTabChange = (tab: TabType) => {
+    setActiveTab(tab);
+    const targetPath = tab === "checkin" ? "/" : `/${tab}`;
+    if (window.location.pathname !== targetPath) {
+      window.history.pushState(null, "", targetPath);
+    }
+  };
+
+  // Listen for browser back/forward buttons
+  useEffect(() => {
+    const handlePopState = () => {
+      const route = resolveRouteFromPath();
+      setActiveTab(route.tab);
+      if (route.isCrisis) {
+        setIsCrisisModalOpen(true);
+      }
+    };
+    window.addEventListener("popstate", handlePopState);
+    return () => window.removeEventListener("popstate", handlePopState);
+  }, []);
 
   // Initialize data on load
   useEffect(() => {
@@ -55,6 +92,18 @@ export default function App() {
 
     loadInitialData();
   }, []);
+
+  // Dynamic title sync per tab for accessibility & SEO
+  useEffect(() => {
+    const titles: Record<TabType, string> = {
+      checkin: "Check-In — A Space to Be Heard",
+      sessions: "Guided Micro-Sessions — Check-In",
+      vent: "Confidential Vent Journal — Check-In",
+      trends: "Mood History & Trends — Check-In",
+      settings: "Settings & Privacy — Check-In",
+    };
+    document.title = titles[activeTab] || "Check-In — A Space to Be Heard";
+  }, [activeTab]);
 
   const todayStr = new Date().toISOString().slice(0, 10);
   const hasCheckedInToday = checkIns.some((c) => c.date === todayStr);
@@ -113,23 +162,42 @@ export default function App() {
   const openCrisisModal = (triggeredBySafety = false) => {
     setIsCrisisSafetyTriggered(triggeredBySafety);
     setIsCrisisModalOpen(true);
+    if (window.location.pathname !== "/crisis") {
+      window.history.pushState(null, "", "/crisis");
+    }
+  };
+
+  const closeCrisisModal = () => {
+    setIsCrisisModalOpen(false);
+    const backPath = activeTab === "checkin" ? "/" : `/${activeTab}`;
+    if (window.location.pathname === "/crisis") {
+      window.history.pushState(null, "", backPath);
+    }
   };
 
   if (isLoading) {
     return (
-      <div className="min-h-screen bg-[#F4F1EB] flex items-center justify-center text-[#7C827B]">
+      <div className="min-h-screen bg-[#F0ECE1] flex items-center justify-center text-[#414741]">
         <div className="flex flex-col items-center gap-3">
-          <div className="w-10 h-10 rounded-full border-2 border-[#8E9F85] border-t-transparent animate-spin" />
-          <span className="text-sm font-serif italic text-[#4A5049]">Opening Check-In...</span>
+          <div className="w-10 h-10 rounded-full border-3 border-[#2A5A3B] border-t-transparent animate-spin" />
+          <span className="text-sm font-serif italic text-[#1A1C19] font-bold">Opening Check-In...</span>
         </div>
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[#F4F1EB] text-[#2D302E] flex justify-center selection:bg-[#8E9F85]/20">
+    <div className="min-h-screen bg-[#ECE7DC] text-[#1A1C19] flex justify-center selection:bg-[#2A5A3B]/20">
+      {/* Skip to Main Content for Screen Readers & Keyboard Users */}
+      <a
+        href="#main-content"
+        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-50 focus:px-4 focus:py-2.5 focus:bg-[#2A5A3B] focus:text-white focus:rounded-xl focus:font-bold focus:shadow-lg focus:outline-none"
+      >
+        Skip to main content
+      </a>
+
       {/* Mobile-first centered app shell container */}
-      <div className="w-full max-w-md min-h-screen bg-[#FDFCF9] flex flex-col shadow-xl border-x border-[#E8E4DF] relative">
+      <div className="w-full max-w-md min-h-screen bg-[#FDFCF9] flex flex-col shadow-2xl border-x-2 border-[#DDD6CC] relative">
         {/* Sticky Header */}
         <Header
           user={user}
@@ -140,29 +208,29 @@ export default function App() {
         />
 
         {/* Persistent 1-tap Disclaimer Sub-Bar */}
-        <div className="bg-[#F7F3EE] border-b border-[#E8E4DF] px-4 py-1.5 flex items-center justify-between text-[11px] text-[#7C827B]">
+        <div className="bg-[#F3EFE6] border-b border-[#DDD6CC] px-4 py-1.5 flex items-center justify-between text-[11px] text-[#414741] font-semibold">
           <div className="flex items-center gap-1.5 truncate">
-            <ShieldCheck className="w-3.5 h-3.5 text-[#8E9F85] flex-shrink-0" />
+            <ShieldCheck className="w-3.5 h-3.5 text-[#2A5A3B] flex-shrink-0" />
             <span className="truncate">Not a substitute for therapy · 24/7 Crisis Support (988)</span>
           </div>
 
           <button
             onClick={() => openCrisisModal(false)}
-            className="text-[10px] text-[#D97B66] font-semibold hover:underline flex-shrink-0 ml-2"
+            className="text-[10px] text-[#C2381E] font-bold hover:underline flex-shrink-0 ml-2"
           >
             Lifeline info
           </button>
         </div>
 
         {/* Main Tab Content */}
-        <main className="flex-1 p-4 sm:p-5 overflow-y-auto">
+        <main id="main-content" tabIndex={-1} className="flex-1 p-4 sm:p-5 overflow-y-auto outline-none">
           {activeTab === "checkin" && (
             <CheckInTab
               user={user}
               checkIns={checkIns}
               onCheckInSaved={handleCheckInSaved}
               onOpenCrisis={() => openCrisisModal(true)}
-              onNavigateToSessions={() => setActiveTab("sessions")}
+              onNavigateToSessions={() => handleTabChange("sessions")}
             />
           )}
 
@@ -190,7 +258,7 @@ export default function App() {
               user={user}
               checkIns={checkIns}
               onOpenPaywall={() => setIsPaywallOpen(true)}
-              onNavigateToCheckIn={() => setActiveTab("checkin")}
+              onNavigateToCheckIn={() => handleTabChange("checkin")}
             />
           )}
 
@@ -211,7 +279,7 @@ export default function App() {
         {/* Bottom Navigation */}
         <Navigation
           activeTab={activeTab}
-          onChangeTab={setActiveTab}
+          onChangeTab={handleTabChange}
           hasCheckedInToday={hasCheckedInToday}
         />
 
@@ -219,7 +287,7 @@ export default function App() {
         <CrisisModal
           isOpen={isCrisisModalOpen}
           isTriggeredBySafetyCheck={isCrisisSafetyTriggered}
-          onClose={() => setIsCrisisModalOpen(false)}
+          onClose={closeCrisisModal}
         />
 
         <OnboardingModal

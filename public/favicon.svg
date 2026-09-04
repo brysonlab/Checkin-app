@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <rect width="64" height="64" rx="18" fill="#2A5A3B" />
+  <!-- Calming organic heart / leaf shape -->
+  <path d="M32 46C32 46 18 36 18 25C18 19.5 22.5 15 28 15C30.5 15 32 16.5 32 16.5C32 16.5 33.5 15 36 15C41.5 15 46 19.5 46 25C46 36 32 46 32 46Z" fill="#FAF8F5" />
+  <circle cx="32" cy="27" r="3" fill="#2A5A3B" />
+</svg>

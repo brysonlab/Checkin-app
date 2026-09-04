@@ -101,22 +101,22 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
       const data = payload[0].payload;
       if (data.mood === null) {
         return (
-          <div className="bg-[#FFFFFF] border border-[#E8E4DF] p-2.5 rounded-xl text-xs text-[#7C827B] shadow-md">
+          <div className="bg-[#FFFFFF] border border-[#DDD6CC] p-2.5 rounded-xl text-xs text-[#5C635C] shadow-md">
             <span>{data.displayDate} ({data.weekday}): No check-in logged</span>
           </div>
         );
       }
       const moodObj = MOODS.find((m) => m.id === data.mood);
       return (
-        <div className="bg-[#FFFFFF] border border-[#E8E4DF] p-3 rounded-2xl text-xs shadow-md space-y-1">
+        <div className="bg-[#FFFFFF] border-2 border-[#DDD6CC] p-3 rounded-2xl text-xs shadow-lg space-y-1">
           <div className="flex items-center justify-between gap-3">
-            <span className="font-bold text-[#2D302E]">{data.displayDate} ({data.weekday})</span>
-            <span className="font-semibold" style={{ color: moodObj?.color }}>
+            <span className="font-bold text-[#1A1C19]">{data.displayDate} ({data.weekday})</span>
+            <span className="font-bold" style={{ color: moodObj?.color }}>
               {moodObj?.label} ({data.mood}/5)
             </span>
           </div>
           {data.note && (
-            <p className="text-[11px] text-[#4A5049] italic max-w-xs pt-1 border-t border-[#E8E4DF]">
+            <p className="text-[11px] text-[#1A1C19] italic max-w-xs pt-1 border-t border-[#DDD6CC] font-medium">
               "{data.note}"
             </p>
           )}
@@ -131,21 +131,21 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
       {/* Header */}
       <div className="flex items-center justify-between">
         <div>
-          <h2 className="font-serif italic text-2xl sm:text-3xl font-medium text-[#2D302E]">
+          <h2 className="font-serif italic text-2xl sm:text-3xl font-bold text-[#1A1C19]">
             Mood History & Trends
           </h2>
-          <p className="text-xs sm:text-sm text-[#7C827B] mt-1">
+          <p className="text-xs sm:text-sm text-[#414741] mt-1 font-medium">
             Observing patterns over time without judgment or clinical pressure.
           </p>
         </div>
       </div>
 
       {/* Time Range Selector */}
-      <div className="flex items-center justify-between bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-1.5 shadow-xs">
+      <div className="flex items-center justify-between bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-1.5 shadow-xs">
         <button
           onClick={() => handleSelectRange(7)}
-          className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
-            timeRange === 7 ? "bg-[#8E9F85] text-white shadow-xs" : "text-[#7C827B] hover:text-[#2D302E]"
+          className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all ${
+            timeRange === 7 ? "bg-[#2A5A3B] text-white shadow-xs" : "text-[#414741] hover:text-[#1A1C19]"
           }`}
         >
           7 Days
@@ -153,8 +153,8 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
 
         <button
           onClick={() => handleSelectRange(14)}
-          className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all ${
-            timeRange === 14 ? "bg-[#8E9F85] text-white shadow-xs" : "text-[#7C827B] hover:text-[#2D302E]"
+          className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all ${
+            timeRange === 14 ? "bg-[#2A5A3B] text-white shadow-xs" : "text-[#414741] hover:text-[#1A1C19]"
           }`}
         >
           14 Days
@@ -162,31 +162,31 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
 
         <button
           onClick={() => handleSelectRange(30)}
-          className={`flex-1 py-1.5 text-xs font-semibold rounded-xl transition-all flex items-center justify-center gap-1 ${
+          className={`flex-1 py-1.5 text-xs font-bold rounded-xl transition-all flex items-center justify-center gap-1 ${
             timeRange === 30
-              ? "bg-[#8E9F85] text-white shadow-xs"
-              : "text-[#7C827B] hover:text-[#2D302E]"
+              ? "bg-[#2A5A3B] text-white shadow-xs"
+              : "text-[#414741] hover:text-[#1A1C19]"
           }`}
         >
           <span>30 Days</span>
-          {!user.isPlus && <Lock className="w-3 h-3 text-[#D29F54]" />}
+          {!user.isPlus && <Lock className="w-3.5 h-3.5 text-[#C2780E]" />}
         </button>
       </div>
 
       {/* Main Chart Card */}
-      <div className="bg-[#FFFFFF] border border-[#E8E4DF] rounded-3xl p-5 shadow-xs space-y-3">
-        <div className="flex items-center justify-between text-xs text-[#7C827B] px-1">
-          <span className="font-semibold text-[#2D302E]">Daily Mood Trajectory</span>
-          <span>5: Great · 1: Rough</span>
+      <div className="bg-[#FFFFFF] border border-[#DDD6CC] rounded-3xl p-5 shadow-xs space-y-3">
+        <div className="flex items-center justify-between text-xs text-[#414741] px-1">
+          <span className="font-bold text-[#1A1C19]">Daily Mood Trajectory</span>
+          <span className="font-semibold text-[#5C635C]">5: Great · 1: Rough</span>
         </div>
 
         {loggedItems.length === 0 ? (
-          <div className="py-12 text-center text-xs text-[#7C827B] space-y-3">
-            <BarChart2 className="w-8 h-8 text-[#D9D4CC] mx-auto" />
-            <p>No check-ins logged for this time window yet.</p>
+          <div className="py-12 text-center text-xs text-[#5C635C] space-y-3">
+            <BarChart2 className="w-8 h-8 text-[#BDB3A4] mx-auto" />
+            <p className="font-medium">No check-ins logged for this time window yet.</p>
             <button
               onClick={onNavigateToCheckIn}
-              className="py-2 px-4 rounded-xl bg-[#8E9F85] text-white font-bold text-xs hover:bg-[#7D8F75] transition-all shadow-xs"
+              className="py-2 px-4 rounded-xl bg-[#2A5A3B] text-white font-bold text-xs hover:bg-[#20472E] transition-all shadow-xs"
             >
               Log Today's Mood
             </button>
@@ -195,19 +195,21 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
           <div className="h-56 w-full pt-2">
             <ResponsiveContainer width="100%" height="100%">
               <LineChart data={chartData} margin={{ top: 10, right: 10, left: -25, bottom: 0 }}>
-                <CartesianGrid stroke="#E8E4DF" vertical={false} />
+                <CartesianGrid stroke="#DDD6CC" strokeDasharray="3 3" vertical={false} />
                 <XAxis
                   dataKey="displayDate"
-                  stroke="#A8A29E"
-                  fontSize={10}
+                  stroke="#414741"
+                  fontSize={11}
+                  fontWeight={600}
                   tickLine={false}
                   axisLine={false}
                 />
                 <YAxis
                   domain={[1, 5]}
                   ticks={[1, 2, 3, 4, 5]}
-                  stroke="#A8A29E"
-                  fontSize={10}
+                  stroke="#414741"
+                  fontSize={11}
+                  fontWeight={600}
                   tickLine={false}
                   axisLine={false}
                 />
@@ -215,10 +217,10 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
                 <Line
                   type="monotone"
                   dataKey="mood"
-                  stroke="#8E9F85"
-                  strokeWidth={3}
-                  dot={{ r: 4, fill: "#8E9F85", strokeWidth: 2, stroke: "#FFFFFF" }}
-                  activeDot={{ r: 6, fill: "#FFFFFF", stroke: "#8E9F85", strokeWidth: 2 }}
+                  stroke="#2A5A3B"
+                  strokeWidth={3.5}
+                  dot={{ r: 5, fill: "#2A5A3B", strokeWidth: 2, stroke: "#FFFFFF" }}
+                  activeDot={{ r: 7, fill: "#FFFFFF", stroke: "#2A5A3B", strokeWidth: 3 }}
                   connectNulls
                 />
               </LineChart>
@@ -228,17 +230,17 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
       </div>
 
       {/* Observational Pattern Callout (Non-Diagnostic) */}
-      <div className="bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-4 flex items-start gap-3 text-xs text-[#4A5049] shadow-xs">
-        <Lightbulb className="w-5 h-5 text-[#D29F54] flex-shrink-0 mt-0.5" />
+      <div className="bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-4 flex items-start gap-3 text-xs text-[#1A1C19] shadow-xs">
+        <Lightbulb className="w-5 h-5 text-[#C2780E] flex-shrink-0 mt-0.5" />
         <div className="space-y-1">
-          <div className="font-semibold text-[#2D302E]">Gentle Observations</div>
-          <p className="leading-relaxed text-[#7C827B]">{patternCallout}</p>
+          <div className="font-bold text-[#1A1C19]">Gentle Observations</div>
+          <p className="leading-relaxed text-[#383E38] font-medium">{patternCallout}</p>
         </div>
       </div>
 
       {/* Mood Distribution */}
-      <div className="bg-[#FFFFFF] border border-[#E8E4DF] rounded-3xl p-5 shadow-xs space-y-3">
-        <h3 className="font-serif italic text-base font-medium text-[#2D302E]">
+      <div className="bg-[#FFFFFF] border border-[#DDD6CC] rounded-3xl p-5 shadow-xs space-y-3">
+        <h3 className="font-serif italic text-base font-bold text-[#1A1C19]">
           Distribution ({loggedItems.length} {loggedItems.length === 1 ? "entry" : "entries"})
         </h3>
 
@@ -249,15 +251,15 @@ export const TrendsTab: React.FC<TrendsTabProps> = ({
             return (
               <div
                 key={m.id}
-                className="bg-[#FAF8F5] border border-[#E8E4DF] rounded-2xl p-2.5 text-center flex flex-col items-center justify-between shadow-xs"
+                className="bg-[#FAF8F5] border border-[#DDD6CC] rounded-2xl p-2.5 text-center flex flex-col items-center justify-between shadow-xs"
               >
-                <span className="text-[11px] font-semibold" style={{ color: m.color }}>
+                <span className="text-[11px] font-bold" style={{ color: m.color }}>
                   {m.label}
                 </span>
-                <span className="text-base font-bold text-[#2D302E] my-1 font-serif italic">
+                <span className="text-base font-bold text-[#1A1C19] my-1 font-serif italic">
                   {count}
                 </span>
-                <span className="text-[10px] text-[#7C827B]">
+                <span className="text-[10px] text-[#484E48] font-semibold">
                   {pct}%
                 </span>
               </div>
