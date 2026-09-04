@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Analytics } from "@vercel/analytics/react";
 import { Header } from "./components/Header";
 import { Navigation } from "./components/Navigation";
 import { CrisisModal } from "./components/CrisisModal";
@@ -312,6 +313,7 @@ export default function App() {
           onClose={() => setIsTherapistExportOpen(false)}
         />
       </div>
+      <Analytics />
     </div>
   );
 }
