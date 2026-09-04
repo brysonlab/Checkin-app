@@ -13,6 +13,7 @@ import { SettingsTab } from "./components/SettingsTab";
 import { TabType, UserProfile, CheckInItem, VentJournalItem } from "./types";
 import { StorageService, defaultUser } from "./utils/storage";
 import { ShieldCheck, Sparkles, Heart } from "lucide-react";
+import { Analytics } from "@vercel/analytics/react";
 
 // Helper to map pathname to application tab or modal
 function resolveRouteFromPath(): { tab: TabType; isCrisis?: boolean } {
@@ -311,6 +312,9 @@ export default function App() {
           journalEntries={journalEntries}
           onClose={() => setIsTherapistExportOpen(false)}
         />
+
+        {/* Vercel Web Analytics */}
+        <Analytics />
       </div>
     </div>
   );
